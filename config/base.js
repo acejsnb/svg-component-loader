@@ -102,8 +102,8 @@ const config = {
             },
             {
                 test: /\.svg$/,
-                use: ({ issuer }) => [
-                    issuer.endsWith('.vue') ? 'vue-loader' : 'babel-loader',
+                use: [
+                    'babel-loader',
                     resolve(__dirname, '../src/loader/index.js')
                 ]
             }

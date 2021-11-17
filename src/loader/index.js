@@ -1,14 +1,16 @@
-const vue = require('vue');
-const react = require('react');
-
 module.exports = async function (svg) {
     const ctx = this;
-    const { async, _module: { resourceResolveData: { relativePath } } } = ctx;
+    const { async, _module: { resourceResolveData: { relativePath, descriptionFileData: { dependencies, devDependencies } } } } = ctx;
     // 根据路径获取文件名字
     const pathArr = relativePath.includes('\\') ? relativePath.split('\\') : relativePath.split('/');
     let source = svg.replaceAll('\n', '').replaceAll('   ', ''),
         name = pathArr.pop(),
-        svgHtml = '';
+        svgHtml = '',
+        result = '',
+        vue = dependencies ? dependencies.vue : devDependencies.vue;
+    const react = dependencies ? dependencies.react : devDependencies.react;
+
+    if (vue && vue.includes('^')) vue = vue.substr(1);
     if (!name.endsWith('.svg')) name = pathArr.pop();
     const callback = async();
     const reg = /<svg (([\s\S])*?)<\/svg>/ig;
@@ -26,9 +28,9 @@ module.exports = async function (svg) {
     // if (context.issuer.endsWith('.jsx') || context.issuer.endsWith('.tsx')) callback(null, `export default () => ${svgHtml}`);
     // else if (context.issuer.endsWith('.vue')) callback(null, `<template>${svgHtml}</template>`);
     // else callback(null, svgHtml);
-    let result = '';
+
     if (vue && !react) {
-        result = vue.version.startsWith('3') ? `
+        result = vue.startsWith('3') ? `
           export default {
             setup() {
               return () => (
