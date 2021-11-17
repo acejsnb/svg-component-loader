@@ -7,7 +7,7 @@
     vue2
     {
         test: /\.svg$/,
-        use: ['vue-loader', 'vuecomponent-svg-loader')]
+        use: ['vue-loader', 'svg-component-loader')]
     }
 ```
 
@@ -15,7 +15,7 @@
     vue3
     {
         test: /\.svg$/,
-        use: ['babel-loader', 'vuecomponent-svg-loader')]
+        use: ['babel-loader', 'svg-component-loader')]
     }
 ```
 
@@ -23,6 +23,6 @@
     react
     {
         test: /\.svg$/,
-        use: ['babel-loader', 'vuecomponent-svg-loader')]
+        use: ['babel-loader', 'svg-component-loader')]
     }
 ```
